@@ -2,7 +2,7 @@ import mysql.connector as mydbconnection
 from mysql.connector import Error
 
 #modular means it's easy to change and move around, plug and play, can stand alone
-def connect():
+def insert_record(id, name, price, date):
     conn = None
 
     try:
@@ -18,13 +18,17 @@ def connect():
         # Creates a cursor object that allows SQL actions to the MySQL server engine
         cursor = conn.cursor()
 
+#create a record tuple/variable took function parameters and made a tuple
+        record = (id, name, price, date)
+
         # Create a SQL Query we want to run
+        # replace values with %s to use parameterized values
         query = '''
             INSERT INTO laptop (ID, Name, Price, Purchase_Date)
-                VALUES(13, 'Mac Air', 1000, '2026-05-13')
+                VALUES(%s, %s, %s, %s)
         '''
         # Execute the query in SQL engine/server
-        cursor.execute(query)
+        cursor.execute(query, record) # call record here to execute
         print('✅ Query Executed')
 
         # Have to commit the query to actually send the data/table update
@@ -41,5 +45,7 @@ def connect():
             conn.close()
             print('Connection Closed')
 
-if __name__ == "__main__":
-    connect()
+# call the function and run this to insert new data/variables into the table
+insert_record(1, 'Mac Book Pro', 3000, '2026-07-18')
+insert_record(12, 'Lenovo Think Pad', 1400, '2025-12-25')
+insert_record(9, 'Alienware', 5000, '2026-09-16')
