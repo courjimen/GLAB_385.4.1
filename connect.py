@@ -1,15 +1,21 @@
 import mysql.connector as mydbconnection
 from mysql.connector import Error
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 #modular means it's easy to change and move around, plug and play, can stand alone
 def connect():
     conn = None
 
+    password = os.getenv('password')
+
     try:
         conn = mydbconnection.connect(
             database='usersdb',
             user='root',
-            password='Orange47'
+            password=password
         )
 
         if conn.is_connected():
